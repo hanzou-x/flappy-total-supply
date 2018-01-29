@@ -1,0 +1,9 @@
+[Unit]
+Description=FlappyCoin API server for Coin Market Cap on port 1337
+
+[Service]
+ExecStart=/bin/sh -ec 'cd /home/ubuntu/flappy-total-supply && sudo -H -u ubuntu node server.js'
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

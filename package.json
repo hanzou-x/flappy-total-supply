@@ -1,0 +1,24 @@
+{
+  "name": "flappy-total-supply",
+  "version": "1.0.0",
+  "description": "A ticker reporting the total_amount as required by Coin Market Cap",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzou-x/flappy-total-supply.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hanzou-x/flappy-total-supply/issues"
+  },
+  "homepage": "https://github.com/hanzou-x/flappy-total-supply#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "log-timestamp": "^0.1.2"
+  }
+}
