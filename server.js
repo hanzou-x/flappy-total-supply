@@ -3,9 +3,16 @@ require('log-timestamp');
 
 var app = express();
 
+var cached_amount = 0.0;
+
 app.get('/chain/FlappyCoin/q/totalbc', function(req, res) {
     var process = require('child_process');
     console.log('GET from ' + req.connection.remoteAddress);
+    if (cached_amount != 0.0) {
+        console.log('total supply: ' + cached_amount);
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.end(''+cached_amount);
+    }
     process.exec('../Flaps/src/flappycoind gettxoutsetinfo', function(err, stdout, stderr) {
         if (err) {
             res.writeHead(403, {'Content-Type': 'text/plain'});
@@ -17,9 +24,13 @@ app.get('/chain/FlappyCoin/q/totalbc', function(req, res) {
             var signed_amount = info.total_amount;
             // Correct for the signed 64-bit integer overflow after Flappy crossed the 92 billion mark
             var corrected_amount = signed_amount + (Math.pow(2, 64) / 100000000.0);
-            console.log('total supply: ' + corrected_amount);
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.end(''+corrected_amount);
+
+            if (cached_amount == 0.0) {
+                console.log('total supply: ' + corrected_amount);
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.end(''+corrected_amount);
+            }
+            cached_amount = corrected_amount;
         }
     });
 });
